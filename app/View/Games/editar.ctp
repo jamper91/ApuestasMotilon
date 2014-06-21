@@ -1,4 +1,4 @@
-<h1>Crear Juego</h1>
+<h1>Editar Juego</h1>
 <?php
 echo $this->Form->create('Game');
 echo $this->Form->input('macho',array(
@@ -37,18 +37,9 @@ echo $this->Form->input('parley3',array(
     'type' => 'text',
     'label' => 'Logro Empate MLINE'
 ));
-echo $this->Form->input('fechaJuego',array(
-    'type' => 'text',
-    'label' => 'Fecha del Juego'
+echo $this->Form->input('visible',array(
+    'type' => 'number',
+    'label' => 'Visible'
 ));
 echo $this->Form->end('Crear Juego');
 ?>
-
-<script>
-    (function()
-    {
-        $('#GameFechaJuego').datetimepicker({
-            dateFormat: "yy-mm-dd"
-        });
-    })();
-    </script>

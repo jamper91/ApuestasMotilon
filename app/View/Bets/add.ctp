@@ -1,4 +1,4 @@
-<table>
+<table width="100%">
     <tr>
         <td>
             Ticket Nro:<?=$id?>
@@ -16,7 +16,7 @@
     </tr>
     <tr>
         <td>
-            <table>
+            <table style="border: 1" width="100%">
                 <tr>
                     <td>
                         T
@@ -49,7 +49,7 @@
     {
         $("#btnImprimir").css("display","none");
         window.print();
-        
+        window.location ="/apuestas/index.php";
     }
 </script>
 

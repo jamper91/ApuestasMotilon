@@ -1,6 +1,7 @@
 <script>
     function agregarApuesta(parley, equipo,tipo,id, encuentro)
     {
+	//encuentro=encuentro.substring(1, 4);
         var html = "";
         html += "<tr logro='"+parley+"' equipo='"+equipo+"' tipo='"+tipo+"' id='"+id+"' encuentro='"+encuentro+"'>";
         html += " <td>";
@@ -14,6 +15,9 @@
         html += " </td>";
         html += " <td>";
         html += parley;
+        html += " </td>";
+        html += " <td>";
+        html += "<a class='deleteLink' onclick='eliminar(\""+id+"\")'>Eliminar</a>";
         html += " </td>";
         html += "</tr>";
         $("#tblApuesta").append(html);
@@ -71,9 +75,15 @@
         $("#lblGanancias").text(total);
 
     }
+    function eliminar(id)
+    {
+        $("#"+id).remove();
+        calcularGanancias();
+    }
+    
 </script>
 
-<table>
+<table id="partidos">
     <thead>
         <tr>
             <th>
@@ -95,25 +105,25 @@
                 Empate
             </td>
             <td >
-                <a onclick="agregarApuesta('<?= $partido["Game"]["parley1"] ?>', '<?= $partido["Game"]["macho"] ?>','ML',<?= $partido["Game"]["id"] ?>,'<?= $partido["Game"]["macho"]." Vs ".$partido["Game"]["hembra"] ?>')">
+                <a onclick="agregarApuesta('<?= $partido["Game"]["parley1"] ?>', '<?= $partido["Game"]["macho"] ?>','ML',<?= $partido["Game"]["id"] ?>,'<?= $partido["Game"]["macho"]." Vs ".substr($partido["Game"]["hembra"],0,2) ?>')">
                     <?= $partido["Game"]["parley1"] ?>
                 </a>    
                 <br>
-                <a onclick="agregarApuesta('<?= $partido["Game"]["parley2"] ?>', '<?= $partido["Game"]["hembra"] ?>','ML',<?= $partido["Game"]["id"] ?>,'<?= $partido["Game"]["macho"]." Vs ".$partido["Game"]["hembra"] ?>')">
+                <a onclick="agregarApuesta('<?= $partido["Game"]["parley2"] ?>', '<?= $partido["Game"]["hembra"] ?>','ML',<?= $partido["Game"]["id"] ?>,'<?= $partido["Game"]["hembra"]." Vs ".substr($partido["Game"]["macho"],0,2) ?>')">
                     <?= $partido["Game"]["parley2"] ?>
                 </a>
                 <br>
-                <a onclick="agregarApuesta('<?= $partido["Game"]["parley3"] ?>', 'Empate','ML',<?= $partido["Game"]["id"] ?>,'<?= $partido["Game"]["macho"]." Vs ".$partido["Game"]["hembra"] ?>')">
+                <a onclick="agregarApuesta('<?= $partido["Game"]["parley3"] ?>', 'Empate','ML',<?= $partido["Game"]["id"] ?>,'Empate vs <?= substr($partido["Game"]["hembra"],0,2) ?>')">
                     <?= $partido["Game"]["parley3"] ?>
                 </a>
             </td>
             <td >
-                <a onclick="agregarApuesta('<?= $partido["Game"]["rline1"] ?>', '<?= $partido["Game"]["macho"] ?>','RL',<?= $partido["Game"]["id"] ?>,'<?= $partido["Game"]["macho"]." Vs ".$partido["Game"]["hembra"] ?>')">
-                    +<?= $partido["Game"]["rlineg"] ?><?= $partido["Game"]["rline1"] ?>
+                <a onclick="agregarApuesta('<?= $partido["Game"]["rline1"] ?>', '<?= $partido["Game"]["macho"] ?>','RL <?= $partido["Game"]["goles_rline_macho"] ?>',<?= $partido["Game"]["id"] ?>,'<?= $partido["Game"]["macho"]." Vs ".substr($partido["Game"]["hembra"],0,2) ?>')">
+                    <?= $partido["Game"]["goles_rline_macho"] ?><?= $partido["Game"]["rline1"] ?>
                 </a>    
                 <br>
-                <a onclick="agregarApuesta('<?= $partido["Game"]["rline2"] ?>', '<?= $partido["Game"]["hembra"] ?>','RL',<?= $partido["Game"]["id"] ?>,'<?= $partido["Game"]["macho"]." Vs ".$partido["Game"]["hembra"] ?>')">
-                    -<?= $partido["Game"]["rlineg"] ?><?= $partido["Game"]["rline2"] ?>
+                <a onclick="agregarApuesta('<?= $partido["Game"]["rline2"] ?>', '<?= $partido["Game"]["hembra"] ?>','RL <?= $partido["Game"]["goles_rline_hembra"] ?>',<?= $partido["Game"]["id"] ?>,'<?= $partido["Game"]["hembra"]." Vs ".substr($partido["Game"]["macho"],0,2) ?>')">
+                    <?= $partido["Game"]["goles_rline_hembra"] ?><?= $partido["Game"]["rline2"] ?>
                 </a>
                 <br>
                 

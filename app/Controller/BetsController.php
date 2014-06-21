@@ -13,7 +13,7 @@ App::uses('AppController', 'Controller');
  * @author Developer
  */
 class BetsController extends AppController {
-
+    public $components = array('RequestHandler');
     public function index($id) {
         
     }
@@ -34,10 +34,68 @@ class BetsController extends AppController {
                 $this->set("hora",$fecha["hours"].":".$fecha["minutes"]);
             }else{
                 $this->Session->setFlash('Error al crear apuesta!');
-                debug($this->Game->validationErrors);
+                debug($this->Bet->validationErrors);
             }
         }
         
+    }
+    public function getbets() 
+    {
+        $this->layout="webservice";
+        //Obtengo una lista de todas las apuestas
+        $options=array(
+            "fields"=>array(
+                "Bet.id",
+                "Bet.pagado"
+            )
+        );
+        $datos=  $this->Bet->find('all',$options);
+        $this->set(
+        array(
+            'datos' => $datos,
+            '_serialize' => array('datos')
+        ));
+    }
+    public function pagar() 
+    {
+        if($this->request->is('post'))
+        {
+            //debug(print_r($this->request->data));
+            $this->Bet->id =$this->request->data["Bet"]["id"];
+            //$this->Bet->id=$this->request->data["Bet"]["id"];
+            $this->Bet->set("pagado","1");
+			$fecha= date("Y-m-d H:i:s");
+			$this->Bet->set("fecha_pago",$fecha);
+            if($this->Bet->save())
+            {
+                $this->Session->setFlash(__('La apuesta ha sido pagada'));
+            }else{
+                $this->Session->setFlash(__('La apuesta no se ha podido actualizar'));
+                debug($this->Bet->validationErrors);
+            }
+        }
+        
+
+    }
+	public function pagados() 
+    {
+		//Obtengo una lista de todas las apuestas
+        $options=array(
+            "fields"=>array(
+                "Bet.id",
+                "Bet.pagado",
+				"Bet.ganancia",
+				"Bet.fecha",
+				"Bet.fecha_pago"
+            ),
+			"conditions"=>array(
+				"Bet.pagado"=>1
+			)
+        );
+        $datos=  $this->Bet->find('all',$options);
+        $this->set("datos",$datos);
+        
+
     }
 
 }

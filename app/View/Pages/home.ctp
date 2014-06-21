@@ -1,5 +1,4 @@
-<?php
-/**
+<?php /**
  *
  *
  * @link          http://cakephp.org CakePHP(tm) Project
@@ -13,10 +12,10 @@ endif;
 
 App::uses('Debugger', 'Utility');
 ?>
-<h2><?php echo __d('cake_dev', 'Release Notes for CakePHP %s.', Configure::version()); ?></h2>
+<!--<h2><?php echo __d('cake_dev', 'Release Notes for CakePHP %s.', Configure::version()); ?></h2>
 <p>
 	<a href="http://cakephp.org/changelogs/<?php echo Configure::version(); ?>"><?php echo __d('cake_dev', 'Read the changelog'); ?> </a>
-</p>
+</p>-->
 <?php
 if (Configure::read('debug') > 0):
 	Debugger::checkSecurityKeys();
@@ -33,7 +32,7 @@ if (file_exists(WWW_ROOT . 'css' . DS . 'cake.generic.css')):
 <?php
 endif;
 ?>
-<p>
+<!--<p>
 <?php
 	if (version_compare(PHP_VERSION, '5.2.8', '>=')):
 		echo '<span class="notice success">';
@@ -45,8 +44,8 @@ endif;
 		echo '</span>';
 	endif;
 ?>
-</p>
-<p>
+</p>-->
+<!--<p>
 	<?php
 		if (is_writable(TMP)):
 			echo '<span class="notice success">';
@@ -58,8 +57,8 @@ endif;
 			echo '</span>';
 		endif;
 	?>
-</p>
-<p>
+</p>-->
+<!--<p>
 	<?php
 		$settings = Cache::settings();
 		if (!empty($settings)):
@@ -89,7 +88,7 @@ endif;
 			echo '</span>';
 		endif;
 	?>
-</p>
+</p>-->
 <?php
 if (isset($filePresent)):
 	App::uses('ConnectionManager', 'Model');
@@ -106,7 +105,7 @@ if (isset($filePresent)):
 		endif;
 	}
 ?>
-<p>
+<!--<p>
 	<?php
 		if ($connected && $connected->isConnected()):
 			echo '<span class="notice success">';
@@ -120,7 +119,7 @@ if (isset($filePresent)):
 			echo '</span>';
 		endif;
 	?>
-</p>
+</p>-->
 <?php endif; ?>
 <?php
 	App::uses('Validation', 'Utility');
@@ -133,7 +132,7 @@ if (isset($filePresent)):
 	endif;
 ?>
 
-<p>
+<!--<p>
 	<?php
 		if (CakePlugin::loaded('DebugKit')):
 			echo '<span class="notice success">';
@@ -147,9 +146,9 @@ if (isset($filePresent)):
 			echo '</span>';
 		endif;
 	?>
-</p>
+</p>-->
 
-<h3><?php echo __d('cake_dev', 'Editing this Page'); ?></h3>
+<!--<h3><?php echo __d('cake_dev', 'Editing this Page'); ?></h3>
 <p>
 <?php
 echo __d('cake_dev', 'To change the content of this page, edit: %s.<br />
@@ -199,9 +198,9 @@ You can also add some CSS styles for your pages at: %s.',
 </p>
 <p>
 <?php echo __d('cake_dev', 'Our primary goal is to provide a structured framework that enables PHP users at all levels to rapidly develop robust web applications, without any loss to flexibility.'); ?>
-</p>
+</p>-->
 
-<ul>
+<!--<ul>
 	<li><a href="http://cakephp.org">CakePHP</a>
 	<ul><li><?php echo __d('cake_dev', 'The Rapid Development Framework'); ?></li></ul></li>
 	<li><a href="http://book.cakephp.org"><?php echo __d('cake_dev', 'CakePHP Documentation'); ?> </a>
@@ -230,4 +229,52 @@ You can also add some CSS styles for your pages at: %s.',
 	<ul><li><?php echo __d('cake_dev', 'Don\'t miss our annual CakePHP conference'); ?></li></ul></li>
 	<li><a href="http://cakefoundation.org"><?php echo __d('cake_dev', 'Cake Software Foundation'); ?> </a>
 	<ul><li><?php echo __d('cake_dev', 'Promoting development related to CakePHP'); ?></li></ul></li>
-</ul>
+</ul>-->
+
+<div id="slides">
+	<?=$this->Html->image("slider/1.jpg", array("alt" => "1"))?>
+	<?=$this->Html->image("slider/2.jpg", array("alt" => "1"))?>
+	<?=$this->Html->image("slider/3.jpg", array("alt" => "1"))?>
+	<?=$this->Html->image("slider/4.jpg", array("alt" => "1"))?>
+  </div>
+
+<table style="width:100%">
+    <tr>
+        
+        <td style="text-align: center">
+            <?php
+            echo $this->Html->link(
+                $this->Html->image("crear.png", array("alt" => "Crear"))."<br>Crear Juego",
+                "/games/add",
+                array('escape' => false)
+            );
+            ?>
+        </td>
+        <td style="text-align: center;vertical-align: bottom;"> 
+            <?php
+            echo $this->Html->link(
+                $this->Html->image("listar.png", array("alt" => "Listar"))."<br>Crear Apuesta",
+                "/games/listar",
+                array('escape' => false)
+            );
+            ?>
+        </td>
+        <td style="text-align: center">
+            <?php
+            echo $this->Html->link(
+                $this->Html->image("pagar.png", array("alt" => "Pagar"))."<br>Pagar Apuesta",
+                "/bets/pagar",
+                array('escape' => false)
+            );
+            ?>
+        </td>
+		<td style="text-align: center">
+            <?php
+            echo $this->Html->link(
+                $this->Html->image("pagados.png", array("alt" => "Pagados"))."<br>Apuestas pagados",
+                "/bets/pagados",
+                array('escape' => false)
+            );
+            ?>
+        </td>
+    </tr>

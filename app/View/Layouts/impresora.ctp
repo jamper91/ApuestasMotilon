@@ -3,12 +3,13 @@
   <head>
     <style>
     body {
-        height: 842px;
-        width: 595px;
+        //height: 203px;
+        width: 300px;
         /* to centre page on screen*/
-        margin-left: auto;
-        margin-right: auto;
+        /*margin-left: auto;
+        margin-right: auto;*/
         font-family: 'Arial';
+        font-size: 19px;
     }
     </style>
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
