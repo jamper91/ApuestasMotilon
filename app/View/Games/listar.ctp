@@ -43,7 +43,7 @@
                         var encuentro=$(this).attr("encuentro");
                         texto+="<tr>";
                         texto+="<td>";
-                        texto+=tipo;
+                        texto+=tipo+"|";
                         texto+="</td>";
                         texto+="<td>";
                         texto+=id;
@@ -95,6 +95,9 @@
             <th>
                 R. Line
             </th>
+			<th>
+                A/B
+            </th>
         </tr>
     </thead>
     <?php foreach ($partidos as $partido): ?>
@@ -124,6 +127,17 @@
                 <br>
                 <a onclick="agregarApuesta('<?= $partido["Game"]["rline2"] ?>', '<?= $partido["Game"]["hembra"] ?>','RL <?= $partido["Game"]["goles_rline_hembra"] ?>',<?= $partido["Game"]["id"] ?>,'<?= $partido["Game"]["hembra"]." Vs ".substr($partido["Game"]["macho"],0,2) ?>')">
                     <?= $partido["Game"]["goles_rline_hembra"] ?><?= $partido["Game"]["rline2"] ?>
+                </a>
+                <br>
+                
+            </td>
+			<td >
+                <a onclick="agregarApuesta('<?= $partido["Game"]["alta"] ?>', '<?= $partido["Game"]["macho"] ?>','A <?= $partido["Game"]["goles_alta"] ?>',<?= $partido["Game"]["id"] ?>,'<?= $partido["Game"]["macho"]." Vs ".substr($partido["Game"]["hembra"],0,2) ?>')">
+                    A <?= $partido["Game"]["goles_alta"] ?><?= $partido["Game"]["alta"] ?>
+                </a>    
+                <br>
+                <a onclick="agregarApuesta('<?= $partido["Game"]["baja"] ?>', '<?= $partido["Game"]["hembra"] ?>','B <?= $partido["Game"]["goles_baja"] ?>',<?= $partido["Game"]["id"] ?>,'<?= $partido["Game"]["hembra"]." Vs ".substr($partido["Game"]["macho"],0,2) ?>')">
+                    B <?= $partido["Game"]["goles_baja"] ?><?= $partido["Game"]["baja"] ?>
                 </a>
                 <br>
                 

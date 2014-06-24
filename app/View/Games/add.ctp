@@ -17,6 +17,14 @@ echo $this->Form->input('goles_rline_macho',array(
     'type' => 'text',
     'label' => 'Goles RLINE Local'
 ));
+echo $this->Form->input('alta',array(
+    'type' => 'text',
+    'label' => 'Logro Alta'
+));
+echo $this->Form->input('goles_alta',array(
+    'type' => 'text',
+    'label' => 'Goles Alta'
+));
 echo $this->Form->input('hembra',array(
     'type' => 'text',
     'label' => 'Visitante'
@@ -32,6 +40,14 @@ echo $this->Form->input('rline2',array(
 echo $this->Form->input('goles_rline_hembra',array(
     'type' => 'text',
     'label' => 'Goles RLINE Visitante'
+));
+echo $this->Form->input('baja',array(
+    'type' => 'text',
+    'label' => 'Logro Baja'
+));
+echo $this->Form->input('goles_baja',array(
+    'type' => 'text',
+    'label' => 'Goles Baja'
 ));
 echo $this->Form->input('parley3',array(
     'type' => 'text',

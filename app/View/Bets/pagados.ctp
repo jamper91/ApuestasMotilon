@@ -5,6 +5,9 @@
 		Tiquete
 	</th>
 	<th style="text-align:center">
+		Apostado
+	</th>
+	<th style="text-align:center">
 		Pagado
 	</th>
 	<th style="text-align:center">
@@ -18,6 +21,9 @@
 		<tr>
 			<td>
 				<?=$dato["Bet"]["id"]?>
+			</td>
+			<td style="text-align:right;">
+				$<?=number_format($dato["Bet"]["apuesta"])?>
 			</td>
 			<td style="text-align:right;">
 				$<?=number_format($dato["Bet"]["ganancia"])?>

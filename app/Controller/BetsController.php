@@ -86,7 +86,8 @@ class BetsController extends AppController {
                 "Bet.pagado",
 				"Bet.ganancia",
 				"Bet.fecha",
-				"Bet.fecha_pago"
+				"Bet.fecha_pago",
+				"Bet.apuesta"
             ),
 			"conditions"=>array(
 				"Bet.pagado"=>1

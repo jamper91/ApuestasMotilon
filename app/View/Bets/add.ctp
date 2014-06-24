@@ -49,7 +49,7 @@
     {
         $("#btnImprimir").css("display","none");
         window.print();
-        window.location ="/apuestas/index.php";
+        window.location ="/apuestas/games/listar.php";
     }
 </script>
 
