@@ -1,6 +1,6 @@
 <h1>Editar Juego</h1>
 <?php
-echo $this->Form->create('Game');
+echo $this->Form->create('Game',array('action' => 'editar'));
 echo $this->Form->input('macho',array(
     'type' => 'text',
     'label' => 'Local'
@@ -16,6 +16,14 @@ echo $this->Form->input('rline1',array(
 echo $this->Form->input('goles_rline_macho',array(
     'type' => 'text',
     'label' => 'Goles RLINE Local'
+));
+echo $this->Form->input('alta',array(
+    'type' => 'text',
+    'label' => 'Logro Alta'
+));
+echo $this->Form->input('goles_alta',array(
+    'type' => 'text',
+    'label' => 'Goles Alta'
 ));
 echo $this->Form->input('hembra',array(
     'type' => 'text',
@@ -33,13 +41,30 @@ echo $this->Form->input('goles_rline_hembra',array(
     'type' => 'text',
     'label' => 'Goles RLINE Visitante'
 ));
+echo $this->Form->input('baja',array(
+    'type' => 'text',
+    'label' => 'Logro Baja'
+));
+echo $this->Form->input('goles_baja',array(
+    'type' => 'text',
+    'label' => 'Goles Baja'
+));
 echo $this->Form->input('parley3',array(
     'type' => 'text',
     'label' => 'Logro Empate MLINE'
 ));
-echo $this->Form->input('visible',array(
-    'type' => 'number',
-    'label' => 'Visible'
+echo $this->Form->input('fechaJuego',array(
+    'type' => 'text',
+    'label' => 'Fecha del Juego'
 ));
-echo $this->Form->end('Crear Juego');
+echo $this->Form->end('Actualizar Juego');
 ?>
+
+<script>
+    (function()
+    {
+        $('#GameFechaJuego').datetimepicker({
+            dateFormat: "yy-mm-dd"
+        });
+    })();
+    </script>
