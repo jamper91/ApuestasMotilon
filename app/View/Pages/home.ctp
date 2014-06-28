@@ -227,21 +227,21 @@ echo $this->Html->link(
 </ul>-->
 
 <div id="slides">
-<?= $this->Html->image("slider/1.jpg", array("alt" => "1")) ?>
-<?= $this->Html->image("slider/2.jpg", array("alt" => "1")) ?>
-<?= $this->Html->image("slider/3.jpg", array("alt" => "1")) ?>
-<?= $this->Html->image("slider/4.jpg", array("alt" => "1")) ?>
+    <?= $this->Html->image("slider/1.jpg", array("alt" => "1")) ?>
+    <?= $this->Html->image("slider/2.jpg", array("alt" => "1")) ?>
+    <?= $this->Html->image("slider/3.jpg", array("alt" => "1")) ?>
+    <?= $this->Html->image("slider/4.jpg", array("alt" => "1")) ?>
 </div>
 
 <table style="width:100%">
     <tr>
 
         <td style="text-align: center">
-<?php
-echo $this->Html->link(
-        $this->Html->image("crear.png", array("alt" => "Crear")) . "<br>Crear Juego", "/games/add", array('escape' => false)
-);
-?>
+            <?php
+            echo $this->Html->link(
+                    $this->Html->image("crear.png", array("alt" => "Crear")) . "<br>Crear Juego", "/games/add", array('escape' => false)
+            );
+            ?>
         </td>
         <td style="text-align: center;vertical-align: bottom;"> 
             <?php
@@ -258,17 +258,24 @@ echo $this->Html->link(
             ?>
         </td>
         <td style="text-align: center">
-<?php
-echo $this->Html->link(
-        $this->Html->image("pagados.png", array("alt" => "Pagados")) . "<br>Apuestas pagados", "/bets/pagados", array('escape' => false)
-);
-?>
+            <?php
+            echo $this->Html->link(
+                    $this->Html->image("pagados.png", array("alt" => "Pagados")) . "<br>Apuestas pagados", "/bets/pagados", array('escape' => false)
+            );
+            ?>
         </td>
         <td style="text-align: center">
-<?php
-echo $this->Html->link(
-        $this->Html->image("editar.png", array("alt" => "Editar")) . "<br>Editar Juegos", "/games/", array('escape' => false)
-);
-?>
+            <?php
+            echo $this->Html->link(
+                    $this->Html->image("editar.png", array("alt" => "Editar")) . "<br>Editar Juegos", "/games/", array('escape' => false)
+            );
+            ?>
+        </td>
+        <td style="text-align: center">
+            <?php
+            echo $this->Html->link(
+                    $this->Html->image("eliminar.png", array("alt" => "Editar")) . "<br>Eliminar Apuestas", "/bets/", array('escape' => false)
+            );
+            ?>
         </td>
     </tr>

@@ -16,8 +16,27 @@ class BetsController extends AppController {
 
     public $components = array('RequestHandler');
 
-    public function index($id) {
-        
+    public function index() {
+        $options = array(
+            "conditions" => array(
+                "Bet.valido" => 1
+            )
+        );
+        $datos = $this->Bet->find("all", $options);
+        $this->set("datos", $datos);
+    }
+
+    public function eliminar($id) {
+        $this->Bet->id = $id;
+        //$this->Bet->id=$this->request->data["Bet"]["id"];
+        $this->Bet->set("valido", "0");
+        if ($this->Bet->save()) {
+            $this->Session->setFlash(__('La apuesta ha sido eliminada'));
+//            $this->redirect('/bets/index/');
+        } else {
+            $this->Session->setFlash(__('La apuesta no se ha podido eliminar'));
+        }
+        $this->redirect('/bets/index/');
     }
 
     public function add() {
@@ -71,10 +90,10 @@ class BetsController extends AppController {
             $this->Bet->set("valido", "1");
             if ($this->Bet->save()) {
 //                $this->Session->setFlash(__('La apuesta ha sido creada'));
-                $datos=array("Resultado"=>"ok");
+                $datos = array("Resultado" => "ok");
             } else {
 //                $this->Session->setFlash(__('La apuesta no se ha podido crear'));
-                $datos=array("Resultado"=>"Error");
+                $datos = array("Resultado" => "Error");
                 debug($this->Bet->validationErrors);
             }
 

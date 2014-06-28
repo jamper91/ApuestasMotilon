@@ -108,7 +108,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
         <div id="container">
             <div id="header">
                 <h1>
-                    <a href="/apuestas/index.php">Apuestas Gabriel</a>
+                    <a href="/apuestas/index.php">Apuestas El indio Motilón</a>
                     <?php // echo $this->Html->link($cakeDescription, 'http://cakephp.org'); ?>
                 </h1>
             </div>
