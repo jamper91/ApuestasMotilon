@@ -1,17 +1,17 @@
 <table width="100%">
     <tr>
         <td>
-            Ticket Nro:<?=$id?>
+            Ticket Nro:<?= $id ?>
         </td>
     </tr>
     <tr>
         <td>
-            Fecha: <?=$fecha?> - Hora: <?=$hora?>
+            Fecha: <?= $fecha ?> - Hora: <?= $hora ?>
         </td>
     </tr>
     <tr>
         <td>
-            Jugada Pesos: <?= number_format($apuesta)?>
+            Jugada Pesos: <?= number_format($apuesta) ?>
         </td>
     </tr>
     <tr>
@@ -31,25 +31,62 @@
                         Logro
                     </td>
                 </tr>
-            <?=$texto?>
+                <?= $texto ?>
             </table>
         </td>
     </tr>
     <tr>
         <td>
-            Premio Pesos: <?= number_format($ganancia)?>
+            Premio Pesos: <?= number_format($ganancia) ?>
         </td>
     </tr>
-    
+
 </table>
 
-<input id="btnImprimir" type="button" onclick="imprimir()" value="Imprimir"/>
+<input id="btnImprimir" type="button" onclick="imprimir(<?= $id ?>)" value="Imprimir"/>
 <script>
-    function imprimir()
+    function imprimir(id)
     {
-        $("#btnImprimir").css("display","none");
-        window.print();
-        window.location ="/apuestas/games/listar.php";
+        $("#BetId").val(id);
+        var url = "habilitarbet.xml";
+        var datos = {
+            idBet: id
+        };
+        ajax(url, datos, function(xml)
+        {
+            if (xml != null)
+            {
+                $("#btnImprimir").css("display", "none");
+                window.print();
+                window.location = "/apuestas/games/listar.php";
+            }
+
+        });
+
+    }
+    function ajax(url2, datos, callback)
+    {
+        //checkInternet();
+        var retornar = null;
+        $.ajax({
+            url: url2,
+            type: "POST",
+            data: datos,
+            headers: {'Access-Control-Allow-Origin': '*'},
+            crossDomain: true,
+            error: function(jqXHR, textStatus, errorThrown)
+            {
+                console.log("base", "ajax", "textStatus: " + textStatus);
+                //console.log("base", "ajax", "errorThrown: " + imprimirObjeto(errorThrown));
+            },
+            success: function(data)
+            {
+                retornar = data;
+            }
+        }).done(function()
+        {
+            callback(retornar);
+        });
     }
 </script>
 
