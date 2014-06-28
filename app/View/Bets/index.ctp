@@ -6,6 +6,7 @@
         <th>Referencia</th>
         <th>Apostado</th>
         <th>Juegos</th>
+        <th>Fecha</th>
         <th>Eliminar</th>
     </tr>
 
@@ -27,6 +28,11 @@
                 echo $partido['Bet']['texto']
             ?>
                 </table>
+        </td>
+        <td>
+            <?php
+                echo $partido['Bet']['fecha']
+            ?>
         </td>
         <td>
             <?php

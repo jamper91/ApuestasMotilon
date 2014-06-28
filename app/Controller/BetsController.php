@@ -20,6 +20,9 @@ class BetsController extends AppController {
         $options = array(
             "conditions" => array(
                 "Bet.valido" => 1
+            ),
+            "order"=>array(
+                "Bet.fecha"
             )
         );
         $datos = $this->Bet->find("all", $options);
