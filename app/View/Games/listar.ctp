@@ -1,27 +1,58 @@
 <script>
+    //Variable para saber cuales partidos ya se agregaron
     function agregarApuesta(parley, equipo, tipo, id, encuentro)
     {
+        var h = false;
+        //Determino si esta fila esta habilitada
+        $("#partidos tr").each(
+                function()
+                {
+                    //Obtengo los atributos game_id y habilitado
+                    var game_id, habilitado;
+                    game_id = $(this).attr("game_id");
+                    habilitado = $(this).attr("habilitado");
+                    console.log("game_id: " + game_id);
+                    console.log("habilitado: " + habilitado);
+                    if (game_id == id)
+                    {
+                        if (habilitado == "true")
+                        {
+                            h = true;
+                            $(this).attr("habilitado", "false");
+                            $(this).css("background-color", "#837d83");
+                            
+                        }
+                    }
+                }
+        );
+
         //encuentro=encuentro.substring(1, 4);
-        var html = "";
-        html += "<tr logro='" + parley + "' equipo='" + equipo + "' tipo='" + tipo + "' id='" + id + "' encuentro='" + encuentro + "'>";
-        html += " <td>";
-        html += tipo;
-        html += " </td>";
-        html += " <td>";
-        html += id;
-        html += " </td>";
-        html += " <td>";
-        html += equipo;
-        html += " </td>";
-        html += " <td>";
-        html += parley;
-        html += " </td>";
-        html += " <td>";
-        html += "<a class='deleteLink' onclick='eliminar(\"" + id + "\")'>Eliminar</a>";
-        html += " </td>";
-        html += "</tr>";
-        $("#tblApuesta").append(html);
-        calcularGanancias()
+        if (h == true)
+        {
+            var html = "";
+            html += "<tr logro='" + parley + "' equipo='" + equipo + "' tipo='" + tipo + "' id='" + id + "' encuentro='" + encuentro + "'>";
+            html += " <td>";
+            html += tipo;
+            html += " </td>";
+            html += " <td>";
+            html += id;
+            html += " </td>";
+            html += " <td>";
+            html += equipo;
+            html += " </td>";
+            html += " <td>";
+            html += parley;
+            html += " </td>";
+            html += " <td>";
+            html += "<a class='deleteLink' onclick='eliminar(\"" + id + "\")'>Eliminar</a>";
+            html += " </td>";
+            html += "</tr>";
+            $("#tblApuesta").append(html);
+            calcularGanancias();
+        }else{
+            alert("No se pueden agregar elementos de este partido");
+        }
+
     }
 
     function calcularGanancias()
@@ -79,6 +110,23 @@
     {
         $("#" + id).remove();
         calcularGanancias();
+        $("#partidos tr").each(
+                function()
+                {
+                    //Obtengo los atributos game_id y habilitado
+                    var game_id, habilitado;
+                    game_id = $(this).attr("game_id");
+                    habilitado = $(this).attr("habilitado");
+                    console.log("game_id: " + game_id);
+                    console.log("habilitado: " + habilitado);
+                    if (game_id == id)
+                    {
+                            $(this).attr("habilitado", "true");
+                            $(this).css("background-color", "#ffffff");
+
+                    }
+                }
+        );
     }
 
 </script>
@@ -101,7 +149,7 @@
         </tr>
     </thead>
     <?php foreach ($partidos as $partido): ?>
-        <tr>
+        <tr game_id="<?= $partido["Game"]["id"] ?>" habilitado="true">
             <td >
                 <?= $partido["Game"]["macho"] ?><br>
                 <?= $partido["Game"]["hembra"] ?><br>
