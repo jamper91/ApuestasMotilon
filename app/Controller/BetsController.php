@@ -21,7 +21,7 @@ class BetsController extends AppController {
             "conditions" => array(
                 "Bet.valido" => 1
             ),
-            "order"=>array(
+            "order" => array(
                 "Bet.fecha DESC"
             )
         );
@@ -140,6 +140,59 @@ class BetsController extends AppController {
                 "Bet.pagado" => 1
             )
         );
+        $datos = $this->Bet->find('all', $options);
+        $this->set("datos", $datos);
+    }
+
+    public function estadisticas() 
+    {
+        $fechaInicio=null;
+        $fechaFin=null;
+        if($this->request->is("POST"))
+        {
+            $fechaInicio=  $this->request->data["Bet"]["fechaI"];
+            $fechaFin=  $this->request->data["Bet"]["fechaF"];
+            if($fechaInicio=="")
+                    $fechaInicio=null;
+            if($fechaFin=="")
+                    $fechaFin=null;
+        }
+//        debug("Inicio: ".$fechaInicio);
+//        debug("Fin: ".$fechaFin);
+        $this->Bet->virtualFields['ingresos'] = 'SUM(Bet.apuesta)';
+        $this->Bet->virtualFields['salidas'] = 'SUM(Bet.ganancia)';
+        $conditions=array();
+        if ($fechaInicio && $fechaFin) {
+            $conditions = array(
+                'Bet.fecha >' => $fechaInicio,
+                'Bet.fecha <' => $fechaFin
+            );
+        } else if ($fechaInicio) {
+            $conditions = array(
+                'Bet.fecha >' => $fechaInicio
+            );
+        } else if ($fechaFin) {
+            $conditions = array(
+                'Bet.fecha <' => $fechaInicio
+            );
+        }
+        $conditions=array_merge($conditions, array(
+            "Bet.valido" => "1",
+            "Bet.pagado"=>'1')
+        );
+        $options = array(
+            'conditions' => $conditions,
+            'fields'=>array(
+                'Bet.ingresos',
+                'Bet.salidas',
+                'Bet.fecha',
+                'Bet.apuesta',
+                'Bet.ganancia',
+                'Bet.pagado'
+            )
+            
+        );
+        
         $datos = $this->Bet->find('all', $options);
         $this->set("datos", $datos);
     }
