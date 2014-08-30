@@ -27,7 +27,7 @@ class BetsController extends AppController {
                 $this->layout="impresora";
                 $this->set("id",$this->Bet->id);
                 $this->set("texto",$this->request->data["Bet"]["texto"]);
-                $this->set("apuesta",$this->request->data["Bet"]["apuesta"]);
+                $this->set("apuesta",$this->request->data["Bet"]["apostado"]);
                 $this->set("ganancia",$this->request->data["Bet"]["ganancia"]);
                 $fecha=  getdate();
                 $this->set("fecha",$fecha["mday"]."/".$fecha["mon"]."/".$fecha["year"]);
