@@ -13,89 +13,188 @@ App::uses('AppController', 'Controller');
  * @author Developer
  */
 class BetsController extends AppController {
+
     public $components = array('RequestHandler');
-    public function index($id) {
-        
+
+    public function index() {
+        $options = array(
+            "conditions" => array(
+                "Bet.valido" => 1
+            ),
+            "order" => array(
+                "Bet.fecha DESC"
+            )
+        );
+        $datos = $this->Bet->find("all", $options);
+        $this->set("datos", $datos);
     }
-    public function add() 
-    {
-        
-        if ($this->request->is('post'))
-        {
-            if ($this->Bet->save($this->request->data)) 
-            {
-                $this->layout="impresora";
-                $this->set("id",$this->Bet->id);
-                $this->set("texto",$this->request->data["Bet"]["texto"]);
-                $this->set("apuesta",$this->request->data["Bet"]["apostado"]);
-                $this->set("ganancia",$this->request->data["Bet"]["ganancia"]);
-                $fecha=  getdate();
-                $this->set("fecha",$fecha["mday"]."/".$fecha["mon"]."/".$fecha["year"]);
-                $this->set("hora",$fecha["hours"].":".$fecha["minutes"]);
-            }else{
+
+    public function eliminar($id) {
+        $this->Bet->id = $id;
+        //$this->Bet->id=$this->request->data["Bet"]["id"];
+        $this->Bet->set("valido", "0");
+        if ($this->Bet->save()) {
+            $this->Session->setFlash(__('La apuesta ha sido eliminada'));
+//            $this->redirect('/bets/index/');
+        } else {
+            $this->Session->setFlash(__('La apuesta no se ha podido eliminar'));
+        }
+        $this->redirect('/bets/index/');
+    }
+
+    public function add() {
+
+        if ($this->request->is('post')) {
+            if ($this->Bet->save($this->request->data)) {
+                $this->layout = "impresora";
+                $this->set("id", $this->Bet->id);
+                $this->set("texto", $this->request->data["Bet"]["texto"]);
+                $this->set("apuesta", $this->request->data["Bet"]["apuesta"]);
+                $this->set("ganancia", $this->request->data["Bet"]["ganancia"]);
+                $fecha = getdate();
+                $this->set("fecha", $fecha["mday"] . "/" . $fecha["mon"] . "/" . $fecha["year"]);
+                $this->set("hora", $fecha["hours"] . ":" . $fecha["minutes"]);
+            } else {
                 $this->Session->setFlash('Error al crear apuesta!');
                 debug($this->Bet->validationErrors);
             }
         }
-        
     }
-    public function getbets() 
-    {
-        $this->layout="webservice";
+
+    public function getbets() {
+        $this->layout = "webservice";
         //Obtengo una lista de todas las apuestas
-        $options=array(
-            "fields"=>array(
+        $options = array(
+            "fields" => array(
                 "Bet.id",
                 "Bet.pagado"
             )
         );
-        $datos=  $this->Bet->find('all',$options);
+        $datos = $this->Bet->find('all', $options);
         $this->set(
-        array(
-            'datos' => $datos,
-            '_serialize' => array('datos')
+                array(
+                    'datos' => $datos,
+                    '_serialize' => array('datos')
         ));
     }
-    public function pagar() 
-    {
-        if($this->request->is('post'))
-        {
+
+    /**
+     * Esta funcion se encarga de habilitar una apuesta.
+     * Esto ocurre porque puede ser que se de clic en crear apuesta, pero
+     * no quedo bien, entonces si se da clic en imprimir, se crea, si no, no se valida
+     * 
+     */
+    public function habilitarbet() {
+        $this->layout = "webservice";
+        if ($this->request->is('post')) {
             //debug(print_r($this->request->data));
-            $this->Bet->id =$this->request->data["Bet"]["id"];
+            $this->Bet->id = $this->request->data["idBet"];
             //$this->Bet->id=$this->request->data["Bet"]["id"];
-            $this->Bet->set("pagado","1");
-			$fecha= date("Y-m-d H:i:s");
-			$this->Bet->set("fecha_pago",$fecha);
-            if($this->Bet->save())
-            {
+            $this->Bet->set("valido", "1");
+            if ($this->Bet->save()) {
+//                $this->Session->setFlash(__('La apuesta ha sido creada'));
+                $datos = array("Resultado" => "ok");
+            } else {
+//                $this->Session->setFlash(__('La apuesta no se ha podido crear'));
+                $datos = array("Resultado" => "Error");
+                debug($this->Bet->validationErrors);
+            }
+
+            $this->set(
+                    array(
+                        'datos' => $datos,
+                        '_serialize' => array('datos')
+            ));
+        }
+    }
+
+    public function pagar() {
+        if ($this->request->is('post')) {
+            //debug(print_r($this->request->data));
+            $this->Bet->id = $this->request->data["Bet"]["id"];
+            //$this->Bet->id=$this->request->data["Bet"]["id"];
+            $this->Bet->set("pagado", "1");
+            $fecha = date("Y-m-d H:i:s");
+            $this->Bet->set("fecha_pago", $fecha);
+            if ($this->Bet->save()) {
                 $this->Session->setFlash(__('La apuesta ha sido pagada'));
-            }else{
+            } else {
                 $this->Session->setFlash(__('La apuesta no se ha podido actualizar'));
                 debug($this->Bet->validationErrors);
             }
         }
-        
-
     }
-	public function pagados() 
-    {
-		//Obtengo una lista de todas las apuestas
-        $options=array(
-            "fields"=>array(
+
+    public function pagados() {
+        //Obtengo una lista de todas las apuestas
+        $options = array(
+            "fields" => array(
                 "Bet.id",
                 "Bet.pagado",
-				"Bet.ganancia",
-				"Bet.fecha",
-				"Bet.fecha_pago"
+                "Bet.ganancia",
+                "Bet.fecha",
+                "Bet.fecha_pago",
+                "Bet.apuesta"
             ),
-			"conditions"=>array(
-				"Bet.pagado"=>1
-			)
+            "conditions" => array(
+                "Bet.pagado" => 1
+            )
         );
-        $datos=  $this->Bet->find('all',$options);
-        $this->set("datos",$datos);
-        
+        $datos = $this->Bet->find('all', $options);
+        $this->set("datos", $datos);
+    }
 
+    public function estadisticas() 
+    {
+        $fechaInicio=null;
+        $fechaFin=null;
+        if($this->request->is("POST"))
+        {
+            $fechaInicio=  $this->request->data["Bet"]["fechaI"];
+            $fechaFin=  $this->request->data["Bet"]["fechaF"];
+            if($fechaInicio=="")
+                    $fechaInicio=null;
+            if($fechaFin=="")
+                    $fechaFin=null;
+        }
+//        debug("Inicio: ".$fechaInicio);
+//        debug("Fin: ".$fechaFin);
+        $this->Bet->virtualFields['ingresos'] = 'SUM(Bet.apuesta)';
+        $this->Bet->virtualFields['salidas'] = 'SUM(Bet.ganancia)';
+        $conditions=array();
+        if ($fechaInicio && $fechaFin) {
+            $conditions = array(
+                'Bet.fecha >' => $fechaInicio,
+                'Bet.fecha <' => $fechaFin
+            );
+        } else if ($fechaInicio) {
+            $conditions = array(
+                'Bet.fecha >' => $fechaInicio
+            );
+        } else if ($fechaFin) {
+            $conditions = array(
+                'Bet.fecha <' => $fechaInicio
+            );
+        }
+        $conditions=array_merge($conditions, array(
+            "Bet.valido" => "1",
+            "Bet.pagado"=>'1')
+        );
+        $options = array(
+            'conditions' => $conditions,
+            'fields'=>array(
+                'Bet.ingresos',
+                'Bet.salidas',
+                'Bet.fecha',
+                'Bet.apuesta',
+                'Bet.ganancia',
+                'Bet.pagado'
+            )
+            
+        );
+        
+        $datos = $this->Bet->find('all', $options);
+        $this->set("datos", $datos);
     }
 
 }
